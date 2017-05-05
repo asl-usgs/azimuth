@@ -142,7 +142,7 @@ class MainFrame extends JFrame implements ActionListener, FocusListener,
         // and the additional controls
         
         northSegmentPlot = new SegmentPlotter("North Ref. (H1)",
-                "North", mRefNetwork, "LH1", mRefLocation);
+                "NORTH", mRefNetwork, "LH1", mRefLocation);
         northViewJPanel = northSegmentPlot.createTimePanel();
         northViewJPanel.setMinimumSize(new Dimension(600, 160));
         northViewJPanel.setPreferredSize(new Dimension(prefs.GetMainWidth(),
@@ -160,7 +160,7 @@ class MainFrame extends JFrame implements ActionListener, FocusListener,
                      // subpanel for north load and cancel buttons 
 
         // button for selecting a north data set to load
-        northButton = new JButton("Load North", 
+        northButton = new JButton("Load North (sensor to test)", 
                    Resources.getAsImageIcon("resources/icons/add.png", 20, 20));
         northButton.addActionListener(this);
         northButton.setMaximumSize(northButton.getPreferredSize());
@@ -195,7 +195,7 @@ class MainFrame extends JFrame implements ActionListener, FocusListener,
         JPanel eastSubPanel = new JPanel(); 
                      // same as the one for north (see above)
  
-        eastButton = new JButton("Load East", 
+        eastButton = new JButton("Load East (sensor to test)", 
                    Resources.getAsImageIcon("resources/icons/add.png", 20, 20));
         eastButton.addActionListener(this);
         eastButton.setMaximumSize(eastButton.getPreferredSize());
@@ -212,8 +212,8 @@ class MainFrame extends JFrame implements ActionListener, FocusListener,
 
         add(eastViewBufferJPanel);
 
-        referenceSegmentPlot = new SegmentPlotter("Unknown (H1 or H2)",
-                "REF", mRefNetwork, "LHZ", mRefLocation);
+        referenceSegmentPlot = new SegmentPlotter("North-facing reference",
+                "REF-N", mRefNetwork, "LHN", mRefLocation);
         referenceViewJPanel = referenceSegmentPlot.createTimePanel();
         referenceViewJPanel.setMinimumSize(new Dimension(600, 160));
         referenceViewJPanel.setPreferredSize(new Dimension(prefs.GetMainWidth(),
@@ -226,7 +226,7 @@ class MainFrame extends JFrame implements ActionListener, FocusListener,
 
         JPanel refSubPanel = new JPanel();
 
-        refButton = new JButton("Load Unknown", 
+        refButton = new JButton("Load North REF", 
                    Resources.getAsImageIcon("resources/icons/add.png", 20, 20));
         refButton.addActionListener(this);
         refButton.setMaximumSize(refButton.getPreferredSize());
