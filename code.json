@@ -1,0 +1,29 @@
+{
+  "name": "azimuth",
+  "organization": "U.S. Geological Survey",
+  "description": "Simple program that maximizes correlation to find angle between earthquake sensors",
+  "status": "preliminary",
+  "homepage": "https://github.com/usgs/azimuth",
+  "downloadURL": "https://github.com/usgs/azimuth/archive/master.zip",
+
+  "openSourceProject": 1,
+  "license": "https://github.com/usgs/azimuth/blob/master/LICENSE.md",
+  "vcs": "git",
+  "repository": "https://github.com/usgs/azimuth.git",
+
+  "tags": [
+    "seismic hazards",
+    "ASL"
+  ],
+  "languages": [
+    "English"
+  ],
+
+  "contact": {
+    "name": "Aaron Kearns",
+    "email": "akearns@usgs.gov"
+  },
+  "updated": {
+    "metadataLastUpdated": "15 Aug 2017"
+  }
+}
