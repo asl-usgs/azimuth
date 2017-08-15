@@ -7,13 +7,14 @@ import freq.Cmplx;
 import java.util.Arrays;
 
 /**
- * Extends ContiguousBlock data class to include both the raw and filtered data for the block. Filtering is done via FilterHelper's methods.
+ * Extends ContiguousBlock data class to include both the raw and filtered data 
+ * for the block. Filtering is done via FilterHelper's methods.
  * 
  * @author fshelly
  */
 public class FilterBlock extends ContiguousBlock
 {
-    public  int length = 0;
+    public  int length = 0; // TODO: make final so can't be modified
     private int []  m_intData;
     private int []  m_filterData;
 
@@ -23,20 +24,26 @@ public class FilterBlock extends ContiguousBlock
     private String channel = "";
 
 
-    /*
-     * Construct a filter block from a ContiguousBlock (time interval data) and DataSet (meta data, time series)
+    /**
+     * Construct a filter block from a ContiguousBlock (time interval data) and 
+     * DataSet (meta data, time series)
      * @param cBlock A ContiguousBlock as taken from ChannelSelector
      * @param dSet A DataSet corresponding to the ContiguousBlock
      */
     public FilterBlock(ContiguousBlock cBlock, DataSet dSet) 
                                  throws SequenceRangeException{
-        // TODO: add exception in case someone decides 
-        // to pass non-matching time interval and data?
-
         // contiguousBlock has the time/interval data we need, 
-        // dataSet the data sequence and plot names
+        // dataSet the data sequence and plot namesa
+        // have to manually define superconstructor for parent ContiguousBlock
         super(cBlock.getStartTime(), cBlock.getEndTime(),
               FilterHelper.ONE_HZ_INTERVAL);
+        
+        
+        if(cBlock.getStartTime() != dSet.getStartTime()
+            || cBlock.getEndTime() != dSet.getEndTime()){
+          throw new SequenceRangeException();
+        }
+
 
         network = dSet.getNetwork();
         station = dSet.getStation();
@@ -80,31 +87,6 @@ public class FilterBlock extends ContiguousBlock
 
     }
 
-/* THIS CONSTRUCTOR HAS BEEN COMMENTED OUT AS IT IS NO LONGER NECESSARY
-    // Hopefully we can eventually get rid of this one
-    public FilterBlock(long startTime, long endTime, long interval, int [] data){
-
-        // we will filter the data down to this interval once we're done
-        super(startTime, endTime, FilterHelper.ONE_HZ_INTERVAL);
-        //m_intData = data;
-
-        // Decimate source; apply low-pass filter
-        int[] m_intData = FilterHelper.decimate(data, interval);
-
-        // Create array of double for the (to be band-passed) data
-        length = m_intData.length;
-        double[] filterIn = Azimuth.intArrayToDoubleArray(m_intData);
-
-        // doing that because we assumee m_intData's length 
-        // must be equal to the filter data's, now band-pass it
-        filterIn = lowPassFilter(filterIn, (int)(1000000 / interval));
-
-        m_filterData = Azimuth.doubleArrayToIntArray(filterIn);
-
-    } // constructor
-
-*/
-
     /**
      * Constructor which makes a new FilterBlock out of a subset of another one
      * @param superset  The FilterBlock that we want to create a subset of
@@ -130,7 +112,7 @@ public class FilterBlock extends ContiguousBlock
         
     } // constructor for subset of another FilterBlock
 
-    /*
+    /**
      * Constructor to create a deep copy of a FilterBlock
      * @param superset The FilterBlock we want to create an exact copy of
      */
@@ -188,7 +170,7 @@ public class FilterBlock extends ContiguousBlock
     public int [] getIntData()
     {
         if(m_intData == null){
-	   System.out.println("Well, it's null now!!");
+     System.out.println("Well, it's null now!!");
         }
         return m_intData;
     }

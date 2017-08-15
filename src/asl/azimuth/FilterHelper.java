@@ -1,6 +1,5 @@
 package asl.azimuth;
 
-import java.util.Arrays;
 import freq.Cmplx;
 
 
@@ -30,8 +29,8 @@ public class FilterHelper{
      // a sample lower than 1Hz frq has longer time between samples
      // since it's an inverse relationship and all
      if(src >= tgt){
+       // if data is too low-frequency to decimate, do nothing
        return data;
-       // TODO: throw exception if data is TOO low frequency?
      }
 
      // find what the change in size is going to be
@@ -45,11 +44,9 @@ public class FilterHelper{
      int dnf = (int)(tgt/gcd);
 
      // one valid sample rate for data is 2.5Hz
-     // that is a ratio of 5/2, which won't
-     // downsample neatly in some cases
-     // so we would first upsample,
-     // filter out any noise terms,
-     // then downsample
+     // with 1Hz that comes out as a ratio of 5/2, which won't
+     // downsample neatly in some cases so we would first upsample,
+     // filter out any noise terms, then downsample
      double[] upped = upsample(data,upf);
      upped = lowPassFilter(upped,src*upf);
      double[] down = downsample(upped,dnf);
@@ -136,7 +133,7 @@ public class FilterHelper{
    * @param sps         Samples per second
    * @return            The filtered data
    */
-  private static double[] lowPassFilter(double[] timeseries, long sps)
+  public static double[] lowPassFilter(double[] timeseries, long sps)
   {
     float[] timeseriesFilter = new float[timeseries.length];
     double[] timeseriesdouble = new double[timeseries.length];
